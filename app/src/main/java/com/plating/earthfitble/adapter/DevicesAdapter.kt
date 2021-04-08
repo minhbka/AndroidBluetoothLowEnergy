@@ -3,17 +3,17 @@ package com.plating.earthfitble.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.plating.earthfitble.R
-import com.plating.earthfitble.ScannerActivity
 import com.plating.earthfitble.databinding.DeviceItemBinding
 import com.plating.earthfitble.model.DiscoveredBluetoothDevice
 import com.plating.earthfitble.viewmodels.DevicesLiveData
 
 class DevicesAdapter(
-        activity: ScannerActivity,
-        devicesLiveData: DevicesLiveData?
+    fragment: LifecycleOwner,
+    devicesLiveData: DevicesLiveData?
 
 ):RecyclerView.Adapter<DevicesAdapter.ViewHolder>() {
 
@@ -21,8 +21,8 @@ class DevicesAdapter(
     private var onItemClickListener : OnItemClickListener? = null
     init {
         setHasStableIds(true)
-        devicesLiveData!!.observe(activity, { newDevices ->
-            println("NewDevices: $newDevices")
+        devicesLiveData!!.observe(fragment, { newDevices ->
+
             val result = DiffUtil.calculateDiff(
                     DeviceDiffCallback(devices, newDevices), false)
             devices = newDevices
@@ -66,7 +66,7 @@ class DevicesAdapter(
         }
     }
 
-    fun interface OnItemClickListener {
+    interface OnItemClickListener {
         fun onItemClick(device: DiscoveredBluetoothDevice)
     }
 }

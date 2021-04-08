@@ -35,7 +35,7 @@
             android:ellipsize="end"
             android:singleLine="true"
             android:textSize="18sp"
-            tools:text="Nordic_Blinky"/>
+            tools:text="BLE Device"/>
 
         <com.google.android.material.textview.MaterialTextView
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"

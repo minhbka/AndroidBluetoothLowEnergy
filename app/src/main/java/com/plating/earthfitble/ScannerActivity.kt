@@ -28,7 +28,7 @@ class ScannerActivity : AppCompatActivity(), DevicesAdapter.OnItemClickListener 
         private const val REQUEST_ACCESS_FINE_LOCATION = 1022
     }
     private lateinit var binding:ActivityScannerBinding
-    lateinit var scannerViewModel:ScannerViewModel
+    private lateinit var scannerViewModel:ScannerViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

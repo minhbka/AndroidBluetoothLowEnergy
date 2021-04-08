@@ -5,6 +5,7 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import no.nordicsemi.android.ble.callback.DataReceivedCallback
+import no.nordicsemi.android.ble.callback.MtuCallback
 import no.nordicsemi.android.ble.data.Data
 import no.nordicsemi.android.ble.livedata.ObservableBleManager
 import java.util.*
@@ -12,9 +13,9 @@ import java.util.*
 
 open class UARTBleManager(context: Context): ObservableBleManager(context) {
     companion object{
-        val SERVICE_UUID: UUID = UUID.fromString("6E400001-B5A3-F393-E0A9-E50E24DCCA9E")
-        val CHARACTERISTIC_UUID_RX: UUID = UUID.fromString("6E400002-B5A3-F393-E0A9-E50E24DCCA9E")
-        val CHARACTERISTIC_UUID_TX: UUID = UUID.fromString("6E400003-B5A3-F393-E0A9-E50E24DCCA9E")
+        val SERVICE_UUID: UUID = UUID.fromString("6E400001-B5A3-F393-E0A9-E50E24D00488")
+        val CHARACTERISTIC_UUID_RX: UUID = UUID.fromString("6E400002-B5A3-F393-E0A9-E50E24D00488")
+        val CHARACTERISTIC_UUID_TX: UUID = UUID.fromString("6E400003-B5A3-F393-E0A9-E50E24D00488")
     }
     private var useLongWrite = true
     private val receivedData:MutableLiveData<Data> = MutableLiveData()
@@ -27,14 +28,15 @@ open class UARTBleManager(context: Context): ObservableBleManager(context) {
     override fun getGattCallback(): BleManagerGattCallback {
         return UARTManagerGattCallback()
     }
-    override fun log(priority: Int, message: String) {
 
-            Log.println(priority, "MyBleManager", message)
-
-    }
     private val receivedCallback = DataReceivedCallback { device, data ->
         receivedData.value = data
     }
+
+    private val mtuChangedCallback = MtuCallback { device, mtu ->
+        Log.d("DEBUG", "Device: ${device.name} with MTU: $mtu")
+    }
+
 
     override fun shouldClearCacheWhenDisconnected(): Boolean {
         return !supported
@@ -43,12 +45,13 @@ open class UARTBleManager(context: Context): ObservableBleManager(context) {
     protected inner class UARTManagerGattCallback: BleManagerGattCallback(){
 
         override fun initialize() {
+            Log.d("DEBUG", "initialize")
             setNotificationCallback(txCharacteristic)
                 .with (receivedCallback)
 
-            requestMtu(260).enqueue()
-            //readCharacteristic(txCharacteristic).with(receivedCallback).enqueue()
             enableNotifications(txCharacteristic).enqueue()
+            requestMtu(250).with(mtuChangedCallback).enqueue()
+            requestMtu(260).with(mtuChangedCallback).enqueue()
         }
 
         override fun isRequiredServiceSupported(gatt: BluetoothGatt): Boolean {
@@ -81,6 +84,7 @@ open class UARTBleManager(context: Context): ObservableBleManager(context) {
         }
 
     }
+    fun getCurrentMTU() = mtu
 
     fun send(text: String?){
         if (rxCharacteristic == null)

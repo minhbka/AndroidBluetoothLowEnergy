@@ -14,8 +14,8 @@
         android:supportsRtl="true"
         android:requestLegacyExternalStorage="true"
         android:theme="@style/Theme.EarthFitBLE">
-        <activity android:name=".MainActivity"/>
-        <activity android:name=".ScannerActivity">
+        <activity android:name=".ScannerActivity"/>
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

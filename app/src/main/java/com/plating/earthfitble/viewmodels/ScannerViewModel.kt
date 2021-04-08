@@ -4,6 +4,7 @@ import android.app.Application
 import android.bluetooth.BluetoothAdapter
 import android.content.*
 import android.location.LocationManager
+import android.util.Log
 
 import androidx.lifecycle.AndroidViewModel
 import androidx.preference.PreferenceManager
@@ -42,6 +43,7 @@ class ScannerViewModel(application: Application):AndroidViewModel(application) {
     }
 
     init {
+        Log.d("DEBUG", "Init view model")
         preferences = PreferenceManager.getDefaultSharedPreferences(application)
 
         val filterUuidRequired: Boolean = isUuidFilterEnabled()
@@ -57,13 +59,19 @@ class ScannerViewModel(application: Application):AndroidViewModel(application) {
 
     override fun onCleared() {
         super.onCleared()
-        getApplication<Application>().unregisterReceiver(bluetoothStateBroadcastReceiver)
-        getApplication<Application>().unregisterReceiver(locationProviderChangedReceiver)
+        try {
+            getApplication<Application>().unregisterReceiver(bluetoothStateBroadcastReceiver)
+            getApplication<Application>().unregisterReceiver(locationProviderChangedReceiver)
+        }
+        catch (ex:Exception){
+            Log.e("DEBUG", "already unregistered")
+        }
+
     }
-    fun isUuidFilterEnabled(): Boolean {
+    private fun isUuidFilterEnabled(): Boolean {
         return preferences!!.getBoolean(PREFS_FILTER_UUID_REQUIRED, true)
     }
-    fun isNearbyFilterEnabled(): Boolean {
+    private fun isNearbyFilterEnabled(): Boolean {
         return preferences!!.getBoolean(PREFS_FILTER_NEARBY_ONLY, false)
     }
 
@@ -174,6 +182,7 @@ class ScannerViewModel(application: Application):AndroidViewModel(application) {
      * Register for required broadcast receivers.
      */
     private fun registerBroadcastReceivers(application: Application) {
+        Log.d("DEBUG", "registerReceiver: $application")
         application.registerReceiver(
             bluetoothStateBroadcastReceiver,
             IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED)
