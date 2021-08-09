@@ -12,6 +12,7 @@ import android.provider.Settings.SettingNotFoundException
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
+import java.util.*
 
 
 class Utils {
@@ -74,6 +75,17 @@ class Utils {
             val preferences = PreferenceManager.getDefaultSharedPreferences(context)
             preferences.edit().putBoolean(PREFS_PERMISSION_REQUESTED, true).apply()
         }
+        fun getDateString():String{
+            val tz = TimeZone.getTimeZone("GMT+09:00")
+            val c = Calendar.getInstance(tz)
+            return "${c.get(Calendar.YEAR)}"+ String.format("%02d", c.get(Calendar.MONTH)+1) +
+                    String.format("%02d", c.get(Calendar.DAY_OF_MONTH)) +
+                    String.format("%02d" , c.get(Calendar.HOUR_OF_DAY)) +
+                    String.format("%02d" , c.get(Calendar.MINUTE)) +
+                    String.format("%02d" , c.get(Calendar.SECOND))
+        }
     }
+
+
 
 }

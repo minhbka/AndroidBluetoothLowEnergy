@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
+import com.plating.earthfitble.R
 import com.plating.earthfitble.databinding.HomeFragmentBinding
 import com.plating.earthfitble.viewmodels.MainViewModel
 
@@ -27,6 +29,10 @@ class HomeFragment : Fragment() {
         binding.scanButton.setOnClickListener {
             val fm = parentFragmentManager
             ScanDialogFragment().show(fm, null)
+        }
+
+        binding.goNext.setOnClickListener {
+            findNavController().navigate(R.id.action_takeImageFragment, null)
         }
     }
     override fun onDestroyView() {

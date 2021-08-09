@@ -37,7 +37,7 @@
         android:label="camera_moving_fragment"
         tools:layout="@layout/take_weight_fragment" >
         <action
-            android:id="@+id/action_cameraMovingFragment_to_foodImageFragment"
+            android:id="@+id/action_sendDatatFragment"
             app:destination="@id/sendDataFragment"
             app:enterAnim="@anim/fade_in"
             app:exitAnim="@anim/fade_out"
@@ -50,8 +50,8 @@
         android:label="food_image_fragment"
         tools:layout="@layout/send_data_fragment" >
         <action
-            android:id="@+id/action_foodImageFragment_to_finishFragment"
-            app:destination="@id/homeFragment"
+            android:id="@+id/action_takeImageFragment"
+            app:destination="@id/takeImageFragment"
             app:enterAnim="@anim/fade_in"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
