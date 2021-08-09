@@ -1,4 +1,4 @@
-package com.plating.earthfitble
+package com.plating.earthfitble.ui
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -8,29 +8,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.SimpleItemAnimator
-import com.plating.BlankViewModel
+import com.plating.earthfitble.R
 import com.plating.earthfitble.adapter.DevicesAdapter
 import com.plating.earthfitble.databinding.DeviceScanDialogBinding
 import com.plating.earthfitble.model.DiscoveredBluetoothDevice
 import com.plating.earthfitble.utils.Utils
-import com.plating.earthfitble.utils.hide
-import com.plating.earthfitble.utils.invisible
-import com.plating.earthfitble.utils.show
 import com.plating.earthfitble.viewmodels.ScannerStateLiveData
 import com.plating.earthfitble.viewmodels.ScannerViewModel
 
 class ScanDialogFragment:DialogFragment(), DevicesAdapter.OnItemClickListener {
-    lateinit var binding:DeviceScanDialogBinding
+    private var _binding:DeviceScanDialogBinding?=null
+    private val binding get() = _binding!!
     lateinit var viewModel:ScannerViewModel
     lateinit var devicesAdapter: DevicesAdapter
-    private var mCallBack :DeviceSelectedInterface?=null
+    private var mCallBack : DeviceSelectedInterface?=null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.device_scan_dialog, container, false)
+        _binding = DeviceScanDialogBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -158,7 +155,10 @@ class ScanDialogFragment:DialogFragment(), DevicesAdapter.OnItemClickListener {
             }
         }
     }
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }
 
 interface DeviceSelectedInterface {

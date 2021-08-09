@@ -1,21 +1,21 @@
-package com.plating.earthfitble
+package com.plating.earthfitble.ui
 
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.google.firebase.storage.ktx.storageMetadata
+import com.plating.earthfitble.R
 import com.plating.earthfitble.databinding.ActivityMainBinding
 import com.plating.earthfitble.model.DiscoveredBluetoothDevice
 import com.plating.earthfitble.viewmodels.MainViewModel
-import kotlinx.coroutines.tasks.await
 import no.nordicsemi.android.ble.livedata.state.ConnectionState
 import java.io.File
 import java.io.FileOutputStream
@@ -37,9 +37,11 @@ class MainActivity : AppCompatActivity(), DeviceSelectedInterface {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
+        loginToFirebase()
         mainViewModel.getCameraConnectionState().observe(this, { cameraConnectionState ->
 
             when (cameraConnectionState.state) {
@@ -136,48 +138,32 @@ class MainActivity : AppCompatActivity(), DeviceSelectedInterface {
             }
         })
 
-        binding.sendHelloCamera.setOnClickListener {
-            mainViewModel.sendMessageToCamera("TAKE:${getDateString()}")
-        }
-        binding.sendHelloLoadCell.setOnClickListener {
-            mainViewModel.sendMessageToLoadCell("HELLO LOADCELL")
-        }
-        binding.askCameraToSend.setOnClickListener {
-            fileByteArray = ByteArray(0)
-            segmentIndex = 0
-            mainViewModel.sendMessageToCamera("SEND")
-        }
-        binding.askLoadCellToSend.setOnClickListener {
-            mainViewModel.sendMessageToLoadCell("SEND")
-        }
-        binding.scanButton.setOnClickListener {
-            val fm = supportFragmentManager
-            ScanDialogFragment().show(fm, null)
-        }
-        binding.cameraDisconnect.setOnClickListener {
-            mainViewModel.cameraDisconnect()
-            onCameraConnectionStateChanged(false)
-        }
-        binding.loadCellDisconnect.setOnClickListener {
-            mainViewModel.loadCellDisconnect()
-            onLoadCellConnectionStateChanged(false)
-        }
+//        binding.sendHelloCamera.setOnClickListener {
+//            mainViewModel.sendMessageToCamera("TAKE:${getDateString()}")
+//        }
+//        binding.sendHelloLoadCell.setOnClickListener {
+//            mainViewModel.sendMessageToLoadCell("HELLO LOADCELL")
+//        }
+//        binding.askCameraToSend.setOnClickListener {
+//            fileByteArray = ByteArray(0)
+//            segmentIndex = 0
+//            mainViewModel.sendMessageToCamera("SEND")
+//        }
+//        binding.askLoadCellToSend.setOnClickListener {
+//            mainViewModel.sendMessageToLoadCell("SEND")
+//        }
+
+//        binding.cameraDisconnect.setOnClickListener {
+//            mainViewModel.cameraDisconnect()
+//            onCameraConnectionStateChanged(false)
+//        }
+//        binding.loadCellDisconnect.setOnClickListener {
+//            mainViewModel.loadCellDisconnect()
+//            onLoadCellConnectionStateChanged(false)
+//        }
 
     }
 
-    override fun onStart() {
-        super.onStart()
-        Log.d("DEBUG", "On start")
-        auth = Firebase.auth
-        auth.signInWithEmailAndPassword("minh@plating.co.kr", "helloworld").addOnCompleteListener {
-            if (it.isSuccessful){
-                Log.d("DEBUG", "Login Success")
-            }
-            else{
-                Log.e("DEBUG", "Login Failed: ${it.exception}")
-            }
-        }
-    }
     private fun getDateString():String{
         val tz = TimeZone.getTimeZone("GMT+09:00")
         val c = Calendar.getInstance(tz)
@@ -195,15 +181,15 @@ class MainActivity : AppCompatActivity(), DeviceSelectedInterface {
 
     }
     private fun onCameraConnectionStateChanged(connected: Boolean) {
-        binding.sendHelloCamera.isEnabled = connected
-        binding.askCameraToSend.isEnabled = connected
-        binding.cameraDisconnect.isEnabled = connected
+//        binding.sendHelloCamera.isEnabled = connected
+//        binding.askCameraToSend.isEnabled = connected
+//        binding.cameraDisconnect.isEnabled = connected
     }
 
     private fun onLoadCellConnectionStateChanged(connected: Boolean){
-        binding.sendHelloLoadCell.isEnabled = connected
-        binding.askLoadCellToSend.isEnabled = connected
-        binding.loadCellDisconnect.isEnabled = connected
+//        binding.sendHelloLoadCell.isEnabled = connected
+//        binding.askLoadCellToSend.isEnabled = connected
+//        binding.loadCellDisconnect.isEnabled = connected
     }
 
     private fun writeBytesAsJPG(bytes : ByteArray) {
@@ -224,7 +210,7 @@ class MainActivity : AppCompatActivity(), DeviceSelectedInterface {
             os.close()
             fileName = ""
             val fileUri = Uri.fromFile(myExternalFile)
-            val uploadRef =  storage.reference.child("test/$writeFile")
+            val uploadRef =  storage.reference.child("clients/Bn9MMP39P8Tadic3wwPN/dailyMenu/01Wp3M4F5MXQBaY7spmK/lunch/$writeFile")
             uploadRef.putFile(fileUri, storageMetadata {
                 contentType = "image/jpg"
             })
@@ -235,5 +221,22 @@ class MainActivity : AppCompatActivity(), DeviceSelectedInterface {
             Log.d("DEBUG", "Error: $ex")
         }
 
+    }
+
+    private fun loginToFirebase(){
+        val email = "minh@plating.co.kr"
+        val pw = "helloworld"
+        Firebase.auth.signInWithEmailAndPassword(email, pw).addOnCompleteListener {
+            if (it.isSuccessful){
+                Log.d("DEBUG", "signInWithEmail:success")
+//                binding.scanButton.isEnabled = true
+            }
+            else{
+                Log.d("DEBUG", "signInWithEmail:failure", it.exception)
+                Toast.makeText(baseContext, "Authentication failed.",
+                    Toast.LENGTH_SHORT).show()
+//                binding.scanButton.isEnabled = false
+            }
+        }
     }
 }

@@ -2,11 +2,9 @@ package com.plating.earthfitble.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.plating.earthfitble.R
 import com.plating.earthfitble.databinding.DeviceItemBinding
 import com.plating.earthfitble.model.DiscoveredBluetoothDevice
 import com.plating.earthfitble.viewmodels.DevicesLiveData
@@ -35,7 +33,7 @@ class DevicesAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val binding:DeviceItemBinding = DataBindingUtil.inflate(layoutInflater, R.layout.device_item, parent, false)
+        val binding:DeviceItemBinding = DeviceItemBinding.inflate(layoutInflater, parent, false)
         return ViewHolder(binding)
     }
 

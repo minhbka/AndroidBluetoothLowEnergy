@@ -1,94 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".MainActivity">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.MainActivity">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/scanButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="SCAN"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="50dp"
-            android:padding="15dp"
-            android:textSize="20sp"/>
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/my_nav_host_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="0dp"
+        android:layout_width="0dp"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/nav_graph"
+        />
+<!--    <com.google.android.material.button.MaterialButton-->
+<!--        android:id="@+id/scanButton"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="기기연결하기"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        android:layout_marginTop="50dp"-->
+<!--        android:padding="15dp"-->
+<!--        android:textSize="20sp"/>-->
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/sendHelloCamera"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="SEND HELLO"
-            app:layout_constraintTop_toBottomOf="@id/scanButton"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="50dp"
-            android:padding="15dp"
-            android:textSize="20sp"/>
+<!--    <com.google.android.material.button.MaterialButton-->
+<!--        android:id="@+id/sendHelloCamera"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text=""-->
+<!--        app:layout_constraintTop_toBottomOf="@id/scanButton"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        android:layout_marginTop="50dp"-->
+<!--        android:padding="15dp"-->
+<!--        android:textSize="20sp"/>-->
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/askCameraToSend"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="PLEASE SEND IMAGE"
-            app:layout_constraintTop_toBottomOf="@id/sendHelloCamera"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="50dp"
-            android:padding="15dp"
-            android:textSize="20sp"/>
+<!--    <com.google.android.material.button.MaterialButton-->
+<!--        android:visibility="gone"-->
+<!--        android:id="@+id/askCameraToSend"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="PLEASE SEND IMAGE"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/sendHelloCamera"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        android:layout_marginTop="50dp"-->
+<!--        android:padding="15dp"-->
+<!--        android:textSize="20sp"/>-->
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/cameraDisconnect"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Disconnect Camera"
-            app:layout_constraintTop_toBottomOf="@id/askCameraToSend"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="50dp"
-            android:padding="15dp"
-            android:textSize="20sp"/>
+<!--    <com.google.android.material.button.MaterialButton-->
+<!--        android:visibility="gone"-->
+<!--        android:id="@+id/cameraDisconnect"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Disconnect Camera"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/askCameraToSend"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        android:layout_marginTop="50dp"-->
+<!--        android:padding="15dp"-->
+<!--        android:textSize="20sp"/>-->
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/sendHelloLoadCell"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="SEND HELLO"
-            app:layout_constraintTop_toBottomOf="@id/cameraDisconnect"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="50dp"
-            android:padding="15dp"
-            android:textSize="20sp"/>
+<!--    <com.google.android.material.button.MaterialButton-->
+<!--        android:visibility="gone"-->
+<!--        android:id="@+id/sendHelloLoadCell"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="SEND HELLO"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/cameraDisconnect"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        android:layout_marginTop="50dp"-->
+<!--        android:padding="15dp"-->
+<!--        android:textSize="20sp"/>-->
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/askLoadCellToSend"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="PLEASE SEND DATA"
-            app:layout_constraintTop_toBottomOf="@id/sendHelloLoadCell"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="50dp"
-            android:padding="15dp"
-            android:textSize="20sp"/>
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/loadCellDisconnect"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="DISCONNECT LOAD CELL"
-            app:layout_constraintTop_toBottomOf="@id/askLoadCellToSend"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="50dp"
-            android:padding="15dp"
-            android:textSize="20sp"/>
+<!--    <com.google.android.material.button.MaterialButton-->
+<!--        android:visibility="gone"-->
+<!--        android:id="@+id/askLoadCellToSend"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="PLEASE SEND DATA"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/sendHelloLoadCell"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        android:layout_marginTop="50dp"-->
+<!--        android:padding="15dp"-->
+<!--        android:textSize="20sp"/>-->
+<!--    <com.google.android.material.button.MaterialButton-->
+<!--        android:visibility="gone"-->
+<!--        android:id="@+id/loadCellDisconnect"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="DISCONNECT LOAD CELL"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/askLoadCellToSend"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        android:layout_marginTop="50dp"-->
+<!--        android:padding="15dp"-->
+<!--        android:textSize="20sp"/>-->
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+</androidx.constraintlayout.widget.ConstraintLayout>

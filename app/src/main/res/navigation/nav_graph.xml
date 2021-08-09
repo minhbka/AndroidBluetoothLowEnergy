@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.plating.earthfitble.ui.HomeFragment"
+        android:label="home_fragment"
+        tools:layout="@layout/home_fragment" >
+        <action
+            android:id="@+id/action_takeImageFragment"
+            app:destination="@id/takeImageFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/takeImageFragment"
+        android:name="com.plating.earthfitble.ui.TakeImageFragment"
+        android:label="food_weight_fragment"
+        tools:layout="@layout/take_image_fragment" >
+        <action
+            android:id="@+id/action_takeWeightFragment"
+            app:destination="@id/takeWeightFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
+    </fragment>
+    <fragment
+        android:id="@+id/takeWeightFragment"
+        android:name="com.plating.earthfitble.ui.TakeWeightFragment"
+        android:label="camera_moving_fragment"
+        tools:layout="@layout/take_weight_fragment" >
+        <action
+            android:id="@+id/action_cameraMovingFragment_to_foodImageFragment"
+            app:destination="@id/sendDataFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/sendDataFragment"
+        android:name="com.plating.earthfitble.ui.SendDataFragment"
+        android:label="food_image_fragment"
+        tools:layout="@layout/send_data_fragment" >
+        <action
+            android:id="@+id/action_foodImageFragment_to_finishFragment"
+            app:destination="@id/homeFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+    </fragment>
+</navigation>
